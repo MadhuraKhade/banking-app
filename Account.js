@@ -28,15 +28,15 @@ class Account{
             console.log(error.message)
         }
     }
-    transfer(receiverAccount,amount){
+    transfer(amount) {
         try {
-            if(typeof amount != "number" || amount <= 0 || amount > this.balance){
-                throw new Error("Invalid amount for transfer")
+            if (typeof amount !== "number" || amount <= 0 || amount > this.balance) {
+                throw new Error("Invalid amount for transfer");
             }
-            this.balance -= amount
-            receiverAccount.deposit(amount)
+            this.balance -= amount;
+            return this.balance;
         } catch (error) {
-            console.log(error.message)
+            console.log(error.message);
         }
     }
 

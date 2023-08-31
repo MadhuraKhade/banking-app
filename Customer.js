@@ -299,23 +299,22 @@ class Customer{
             if (this.isAdmin) {
                 throw new Error("Admin cannot transfer amount");
             }
-            let [receiverCustomer , receiverCustomerIndex] = Customer.#findCustomer(receiverCustomerId)
-            if(!receiverCustomer){
-                throw new Error("Receiver customer not found")
+            let [receiverCustomer , receiverCustomerIndex] = Customer.#findCustomer(receiverCustomerId);
+            if (!receiverCustomer) {
+                throw new Error("Receiver customer not found");
             }
-            let senderAccountIndex = this.findAccount(selfAccountId)
-            let receiverAccountIndex = receiverCustomer.findAccount(receiverAccountId)
-            if(senderAccountIndex == -1 || receiverAccountIndex == -1){
-                throw new Error("Invalid account Id")
+            let [senderAccount , senderAccountIndex] = this.findAccount(selfAccountId);
+            let [receiverAccount ,receiverAccountIndex] = receiverCustomer.findAccount(receiverAccountId);
+            if (senderAccountIndex === -1 || receiverAccountIndex === -1) {
+                throw new Error("Invalid account Id");
             }
-            let selfAccount = this.accounts[senderAccountIndex]
-            let receiverAccount = receiverCustomer.accounts[receiverAccountIndex]
-            selfAccount.transfer(receiverAccount,amount)
-            return this.accounts
+            senderAccount.withdraw(amount);
+            receiverAccount.deposit(amount) 
+            return this.accounts;
         } catch (error) {
             console.log(error.message);
         }
     }
-
+    
 }
 module.exports = Customer
